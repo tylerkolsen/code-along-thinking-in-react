@@ -1,12 +1,34 @@
 import './InvoiceTable.css';
-import ModeButtons from './ModeButtons.jsx';
-import DescriptionCell from './DescriptionCell.jsx';
+import TableRow from './TableRow.jsx';
+import TableHeader from './TableHeader.jsx';
+import AddRowButton from './AddRowButton.jsx';
 
-function InvoiceTable() {
+
+function InvoiceTable({ initialData }) {
+
+  const rows = initialData.map((invoiceItem) => {
+    return (
+      <TableRow 
+        key={invoiceItem.id}
+        initialIsEditing={false}
+        initialInvoiceData={invoiceItem}
+      />
+    )
+  })
+
   return (
     <div>
-      InvoiceTable goes Here
-      <DescriptionCell isEditing={true} value={'description'}/>
+      <table>
+        <thead>
+          <TableHeader />
+        </thead>
+        <tbody>
+          {rows}
+        </tbody>
+        <tfoot>
+          <AddRowButton />
+        </tfoot>
+      </table>
     </div>
   )
 }
