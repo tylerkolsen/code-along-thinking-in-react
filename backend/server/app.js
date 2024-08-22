@@ -28,6 +28,29 @@ import handlerFunctions from './controller.js'
 // - { message: '', invoices: []} --> res.send({ message: '', invoices: []})
 app.get('/api/invoices', handlerFunctions.getInvoices)
 
+// Second endpoint (POST):
+// - Add a new row to our invoice data array
+// - Body Object:
+//   - description, rate, hours
+// - '/api/addInvoice'
+// - Send back the new object with a message: 
+//   - { message: '', newInvoice: {} }
+app.post('/api/addInvoice', handlerFunctions.addInvoice)
+
+// Third endpoint (DELETE):
+// - Delete a specific invoice from TEST_DATA
+// - Need 'id' from req.params
+// - '/api/deleteInvoice/:id' --> /:id the params object will have a key of id. this makes that equal to the value of that key
+// - { message: '', invoices: []}
+app.delete('/api/deleteInvoice/:id', handlerFunctions.deleteInvoice)
+
+// Fourth endpoint (PUT):
+// - Update rate/description/hours on a specific invoice object
+// - Body - { description, rate, hours }
+// - '/api/editInvoice'
+// - { message: '', updatedInvoice: {} }
+app.put('/api/editInvoice', handlerFunctions.editInvoice)
+
 
 // Open up door to server
 ViteExpress.listen(app, 2319, () => console.log("We've got a 23-19! Report to http://localhost:2319"))

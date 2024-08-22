@@ -1,4 +1,4 @@
-
+import formatCurrency from '../utils/formatCurrency'
 
 function RateCell({ isEditing, value, onValueChange }) {
 
@@ -11,7 +11,7 @@ function RateCell({ isEditing, value, onValueChange }) {
       />
     </td>
   ) : (
-    <td>{value}</td>
+    <td>{formatCurrency(value)}</td>
   )
 }
 

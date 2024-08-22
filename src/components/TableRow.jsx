@@ -3,6 +3,8 @@ import DescriptionCell from './DescriptionCell.jsx';
 import RateCell from './RateCell.jsx';
 import HoursCell from './HoursCell.jsx';
 import { useState } from 'react';
+import axios from 'axios';
+import formatCurrency from '../utils/formatCurrency.js'
 
 function TableRow({ initialIsEditing, initialInvoiceData, deleteFunc }) {
   // const {description, rate, hours} = initialInvoiceData
@@ -14,7 +16,24 @@ function TableRow({ initialIsEditing, initialInvoiceData, deleteFunc }) {
 
   // Define functions to set editMode back and forth
   const changeEditMode = () => setEditMode(true)
-  const changeNormalMode = () => setEditMode(false)
+  const changeNormalMode = () => {
+    const bodyObj = {
+      id: initialInvoiceData.id,
+      description,
+      rate,
+      hours
+    }
+
+    axios.put('/api/editInvoice', bodyObj)
+      .then((res) => {
+        alert(res.data.message)
+        setDescription(res.data.updatedInvoice.description)
+        setRate(res.data.updatedInvoice.rate)
+        setHours(res.data.updatedInvoice.hours)
+
+        setEditMode(false)
+      })
+    }
 
   return (
   <tr>
@@ -39,7 +58,7 @@ function TableRow({ initialIsEditing, initialInvoiceData, deleteFunc }) {
       value={hours} 
       onValueChange={setHours}
     />
-    <td>{rate * hours}</td>
+    <td>{formatCurrency(rate * hours)}</td>
   </tr>
   )
 }
